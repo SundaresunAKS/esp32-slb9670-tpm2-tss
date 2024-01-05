@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "log.h": "c",
-        "test-options.h": "c",
-        "tss2_tpm2_types.h": "c",
-        "tss2_tcti.h": "c"
-    }
-}

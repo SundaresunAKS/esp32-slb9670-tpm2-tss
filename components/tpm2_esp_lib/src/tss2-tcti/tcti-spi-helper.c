@@ -370,6 +370,7 @@ static TSS2_RC spi_tpm_helper_wait_for_status(TSS2_TCTI_SPI_HELPER_CONTEXT* ctx,
 {
     TSS2_RC rc;
     uint32_t status;
+    uint8_t is_timeout_count =0;
     bool blocking = (timeout == TSS2_TCTI_TIMEOUT_BLOCK);
     if (!blocking) {
         rc = spi_tpm_helper_start_timeout(ctx, timeout);
@@ -388,8 +389,12 @@ static TSS2_RC spi_tpm_helper_wait_for_status(TSS2_TCTI_SPI_HELPER_CONTEXT* ctx,
         rc = spi_tpm_helper_delay_ms(ctx, 8);
         return_if_error(rc, "spi_tpm_helper_delay_ms");
 
-        rc = spi_tpm_helper_timeout_expired(ctx, &is_timeout_expired);
-        return_if_error(rc, "spi_tpm_helper_timeout_expired");
+        // rc = spi_tpm_helper_timeout_expired(ctx, &is_timeout_expired);
+        // return_if_error(rc, "spi_tpm_helper_timeout_expired");
+        if(is_timeout_count > 1000){
+            break;
+        }
+        is_timeout_count++;
     } while (blocking || !is_timeout_expired);
 
     // Timed out

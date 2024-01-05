@@ -94,10 +94,11 @@ TSS2_RC platform_spi_transfer (void* user_data, const void *data_out, void *data
 }
 
 // Sleeps for the specified amount of milliseconds
-void platform_sleep_ms (void* user_data, int32_t milliseconds)
+TSS2_RC platform_sleep_ms (void* user_data, int32_t milliseconds)
 {
     // Sleep the specified amount of milliseconds
     vTaskDelay(milliseconds / portTICK_PERIOD_MS);
+    return TSS2_RC_SUCCESS;
 }
 
 // Start a timeout timer with specified expiry in milliseconds
